@@ -33,11 +33,13 @@ Phương pháp này so khớp sự sai khác trung bình của ma trận ảnh t
 Kỹ thuật nhúng thông tin vào bit cuối cùng (Least Significant Bit) của mỗi kênh màu đỏ (Red), xanh lá (Green), và xanh dương (Blue) của từng pixel trong khung hình đã chọn. Do biên độ màu chỉ lệch tối đa 1 đơn vị trên dải 0-255, mắt người hoàn toàn không thể nhận diện được sự thay đổi nhiễu này, đảm bảo tính tàng hình hoàn hảo.
 Khởi động Lab
 Chuẩn bị môi trường hệ thống:
-Sử dụng lệnh imodule để nạp cấu hình bài thực hành từ kho lưu trữ về hệ thống cục bộ:
+1. Sử dụng lệnh imodule để nạp cấu hình bài thực hành từ kho lưu trữ về hệ thống cục bộ:
 imodule https://github.com/chinhka2004-star/lab/raw/main/imodule.tar
-Di chuyển vào không gian làm việc của sinh viên trong framework Labtainer:
+2. Di chuyển vào không gian làm việc của sinh viên trong framework Labtainer:
 cd ~/labtainer/labtainer-student
-Khởi chạy bài lab để kích hoạt container ảo Ubuntu:
+3. Biên dịch và xây dựng Docker Image cục bộ cho phòng Lab (Bắt buộc đối với bài Lab tùy chỉnh):
+rebuild scenediff-stego
+4. Khởi chạy bài lab để kích hoạt container ảo Ubuntu:
 labtainer scenediff-stego
 Nhiệm vụ
 Task 1: Khởi động môi trường và kiểm tra các file thành phần
