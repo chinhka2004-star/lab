@@ -1,0 +1,45 @@
+BÀI THỰC HÀNH: GIẤU TIN TRONG VIDEO DỰA TRÊN SỰ KHÁC BIỆT KHUNG CẢNH
+Mức độ khó: Trung bình
+====================================================================
+
+1. GIỚI THIỆU
+Trong bài thực hành này, bạn sẽ đóng vai trò là một kỹ sư An toàn thông tin. Nhiệm vụ của bạn là hoàn thiện công cụ giấu tin LSB trên video sử dụng Python. 
+
+Điểm đặc biệt ở đây là: Thay vì giấu tin vào tất cả các khung hình (dễ bị phát hiện và phân tích thống kê), bạn sẽ lập trình thuật toán tự động nhận diện các "khung hình chuyển cảnh" (scene-change frames) là các khung hình có độ sai khác rất lớn so với khung hình ngay trước đó (ví dụ do đổi góc quay, đổi cảnh nền). Việc nhúng dữ liệu vào đây giúp thông điệp cực kỳ an toàn trước các công cụ phân tích cảm quan.
+
+2. CÁC TÁC VỤ CỦA SINH VIÊN
+
+TÁC VỤ 1: Khởi động môi trường và kiểm tra video
+- Hãy gõ lệnh kiểm tra video đầu vào được sinh tự động trong thư mục hiện tại:
+  ls -la input_video.mp4
+- Sử dụng ffprobe để kiểm tra định dạng và độ phân giải video:
+  ffprobe input_video.mp4
+
+TÁC VỤ 2: Cập nhật STUDENT_ID và Hoàn thiện mã nguồn
+- Mở file stego.py bằng trình soạn thảo văn bản (nano hoặc vim):
+  nano stego.py
+- Hoàn thành các hàm có đánh dấu TODO:
+  - calculate_frame_difference: Trả về trị tuyệt đối hiệu trung bình pixel xám.
+  - detect_scene_changes: Xác định danh sách các frame có sai lệch > threshold.
+  - embed_bits_to_frames: Nhúng thông điệp và ký tự kết thúc '\0' vào LSB của pixel RGB.
+  - extract_bits_from_frames: Giải mã LSB cho đến khi gặp '\0'.
+
+TÁC VỤ 3: Thực hiện Nhúng Thông điệp (Encoding)
+- Xác định STUDENT_ID của bạn (ví dụ: SV123456).
+- Soạn thảo một thông điệp bí mật có dạng:
+  "STUDENT_ID: <Mã_SV> | Bi mat quan su: Tan cong luc binh minh!"
+- Chạy lệnh nhúng thông điệp vào video stego.mp4:
+  python3 stego.py encode -i input_video.mp4 -m "STUDENT_ID: SV123456 | Bi mat quan su: Tan cong luc binh minh!" -o stego.mp4 -t 10.0
+
+TÁC VỤ 4: Thực hiện Giải mã & Xác thực (Decoding & Verification)
+- Tiến hành trích xuất thông điệp từ video stego.mp4 để kiểm tra:
+  python3 stego.py decode -i stego.mp4 -o thongdiep.txt -t 10.0
+- Xem thông điệp đã trích xuất:
+  cat thongdiep.txt
+- Kiểm tra tính toàn vẹn (Integrity Check). Hãy tự so sánh chuỗi thông điệp đã nhúng với chuỗi trích xuất được. Nếu trùng khớp, ghi chuỗi "INTEGRITY_OK" vào file xacthuc.txt:
+  echo "INTEGRITY_OK" > xacthuc.txt
+
+TÁC VỤ 5: Hoàn thành chấm điểm tự động (Checkwork)
+- Chạy script chấm điểm tại chỗ để kiểm tra kết quả làm bài:
+  ./checkwork.sh
+- Sau khi chạy xong, hãy dừng lab trên terminal của máy host để tạo file zip nộp bài.
